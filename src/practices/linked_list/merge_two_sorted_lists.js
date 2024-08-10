@@ -27,21 +27,12 @@ function ListNode(val, next) {
  * @return {ListNode}
  */
 var mergeTwoLists = function (list1, list2) {
-  if (!list1 && !list2) return null;
-
-  if (!list1) {
-    return new ListNode(list2.val, mergeTwoLists(null, list2.next));
-  }
-
-  if (!list2) {
-    return new ListNode(list1.val, mergeTwoLists(list1.next, null));
-  }
+  if (!list1 || !list2) return list1 ?? list2 ?? null;
 
   if (list1.val <= list2.val) {
     return new ListNode(list1.val, mergeTwoLists(list1.next, list2));
   }
-
-  return new ListNode(list2.val, mergeTwoLists(list1, list2.next));
+  return new ListNode(list1.val, mergeTwoLists(list1, list2.next));
 };
 
 /**
@@ -72,5 +63,5 @@ export const main = async () => {
     buildListNode([1, 3, 4])
   );
 
-  console.log(isExpectedNode(output, [1, 1, 2, 3, 4, 4]));
+  console.log(isExpectedNode(output, buildListNode([1, 1, 2, 3, 4, 4])));
 };
