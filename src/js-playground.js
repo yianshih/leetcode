@@ -1,3 +1,1 @@
-export const main = async () => {
-  console.log("Hello world");
-};
+export const main = async () => {};
