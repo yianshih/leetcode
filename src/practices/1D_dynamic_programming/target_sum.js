@@ -1,5 +1,7 @@
 /**
 
+[Medium]
+
 494. Target Sum
 
 You are given an integer array nums and an integer target.
@@ -37,6 +39,8 @@ var findTargetSumWays = function (nums, target) {
       traverse(index + 1, total + nums[index]) +
         traverse(index + 1, total - nums[index])
     );
+
+    console.log(dp);
 
     return dp.get(key);
   };

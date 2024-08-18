@@ -1,3 +1,11 @@
+/**
+
+[Medium]
+
+208. Implement Trie (Prefix Tree)
+
+*/
+
 class Trie {
   /**
    * @param {boolean} isWordEnd

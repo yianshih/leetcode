@@ -1,4 +1,9 @@
 /**
+
+[Medium]
+
+17. Letter Combinations of a Phone Number
+
 Example 1:
 
 Input: digits = "23"

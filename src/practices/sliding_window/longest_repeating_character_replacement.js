@@ -16,8 +16,10 @@ Return the length of the longest substring containing the same letter you can ge
 var characterReplacement = function (s, k) {
   let left = 0;
 
+  // max window length
   let res = 0;
 
+  // Counts of each char in current window
   const count = new Map();
 
   let maxCount = 0;
