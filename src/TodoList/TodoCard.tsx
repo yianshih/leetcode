@@ -23,7 +23,6 @@ const StatusButton: Record<
 };
 
 const TodoCard = (props: TodoCardProps) => {
-  console.log("rendering TodoCard");
   const { name, status } = props;
 
   const button = StatusButton[status](props);
