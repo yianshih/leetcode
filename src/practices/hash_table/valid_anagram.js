@@ -18,19 +18,27 @@ An Anagram is a word or phrase formed by rearranging the letters of a different 
 var isAnagram = function (s, t) {
   if (s.length !== t.length) return false;
 
-  const count = new Map();
+  const count = {};
 
   for (let i = 0; i < s.length; i++) {
-    count.set(s[i], (count.get(s[i]) ?? 0) + 1);
+    if (count[s[i]]) {
+      count[s[i]] += 1;
+    } else {
+      count[s[i]] = 1;
+    }
   }
 
-  for (let j = 0; j < t.length; j++) {
-    if (!count.get(t[j])) return false;
+  for (let i = 0; i < t.length; i++) {
+    if (!count[t[i]]) return false;
 
-    count.set(t[j], (count.get(t[j]) ?? 0) - 1);
+    count[t[i]] -= 1;
+
+    if (count[t[i]] === 0) {
+      delete count[t[i]];
+    }
   }
 
-  return true;
+  return Object.keys(count).length === 0;
 };
 
 export const main = async () => {
