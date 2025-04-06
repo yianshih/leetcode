@@ -18,16 +18,23 @@ var groupAnagrams = function (strs) {
   const groups = new Map();
 
   for (let str of strs) {
-    const group = str.split("").sort().join("");
+    const count = Array.from({ length: 26 }, () => 0);
+    for (let i = 0; i < str.length; i++) {
+      const index = str[i].charCodeAt(0) - "a".charCodeAt();
 
-    if (groups.has(group)) {
-      groups.get(group).push(str);
-    } else {
-      groups.set(group, [str]);
+      count[index] += 1;
     }
+
+    const combined = count.join(",");
+
+    const existingGroup = groups.get(combined) ?? [];
+
+    existingGroup.push(str);
+
+    groups.set(combined, existingGroup);
   }
 
-  return [...groups.values()];
+  return Array.from(groups.values());
 };
 
 export const main = async () => {

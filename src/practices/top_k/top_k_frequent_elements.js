@@ -15,31 +15,33 @@ Given an integer array nums and an integer k, return the k most frequent element
  */
 
 var topKFrequent = function (nums, k) {
-  const countMap = new Map();
+  const count = {};
 
-  const counts = Array.from({ length: nums.length + 1 }, () => []);
+  const freq = Array.from({ length: nums.length + 1 }, () => []);
 
-  let topK = new Set();
-
-  for (let i = 0; i < nums.length; i++) {
-    const prevCount = countMap.get(nums[i]) ?? 0;
-
-    const currentCount = prevCount + 1;
-
-    countMap.set(nums[i], currentCount);
-
-    counts[currentCount].push(nums[i]);
+  for (let n of nums) {
+    count[n] = (count[n] ?? 0) + 1;
   }
 
-  for (let i = nums.length; i >= 0; i--) {
-    topK = new Set([...topK, ...counts[i]]);
+  for (let [n, f] of Object.entries(count)) {
+    freq[f].push(Number(n));
+  }
 
-    if (topK.size >= k) {
-      break;
+  const res = [];
+
+  for (let i = freq.length - 1; i >= 0; i--) {
+    const numbers = freq[i];
+
+    for (let n of numbers) {
+      res.push(n);
+
+      if (res.length === k) {
+        return res;
+      }
     }
   }
 
-  return Array.from(topK);
+  return [];
 };
 
 export const main = async () => {
