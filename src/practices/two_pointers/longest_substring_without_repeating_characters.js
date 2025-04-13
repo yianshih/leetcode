@@ -42,7 +42,7 @@ var lengthOfLongestSubstring = function (s) {
     }
 
     currentSet.add(s[right]);
-    max = Math.max(max, currentSet.size);
+    max = Math.max(max, right - left + 1);
   }
 
   return max;
