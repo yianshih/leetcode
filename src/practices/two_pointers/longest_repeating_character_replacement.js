@@ -27,10 +27,15 @@ var characterReplacement = function (s, k) {
   for (let right = 0; right < s.length; right++) {
     count.set(s[right], (count.get(s[right]) ?? 0) + 1);
 
+    /**
+     * Don't care if new maxCount is spill over or not because we want keep the max count
+     * The result will not change until a new valid maxCount found
+     */
     maxCount = Math.max(maxCount, count.get(s[right]));
 
     const windowSize = right - left + 1;
 
+    // Spill over k quota
     if (windowSize - maxCount > k) {
       count.set(s[left], (count.get(s[left]) ?? 0) - 1);
       left += 1;
