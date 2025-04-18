@@ -28,9 +28,9 @@ Output: false
 
  */
 
-const OPEN_CLOSURE = {
-  ")": "(",
+const CLOSE_MAPPER = {
   "]": "[",
+  ")": "(",
   "}": "{",
 };
 
@@ -41,14 +41,13 @@ const OPEN_CLOSURE = {
 var isValid = function (s) {
   const stack = [];
 
-  for (let c of s) {
-    const openClosure = OPEN_CLOSURE[c];
-
-    // if the last inserted item is the corresponding open closure
-    if (stack.length > 0 && stack[stack.length - 1] === openClosure) {
-      stack.pop();
+  for (let i = 0; i < s.length; i++) {
+    if (!CLOSE_MAPPER[s[i]]) {
+      stack.push(s[i]);
+    } else if (stack[stack.length - 1] !== CLOSE_MAPPER[s[i]]) {
+      return false;
     } else {
-      stack.push(c);
+      stack.pop();
     }
   }
 
@@ -59,4 +58,6 @@ export const main = async () => {
   console.log(isValid("()")); // true
   console.log(isValid("()[]{}")); // true
   console.log(isValid("(]")); // false
+  console.log(isValid("([])")); // true
+  console.log(isValid("[")); // true
 };
