@@ -12,31 +12,32 @@ Given n pairs of parentheses, write a function to generate all combinations of w
  * @param {number} n
  * @return {string[]}
  */
-var generateParenthesis = function (n) {
-  const outputs = [];
+var generateParenthesis = (n) => {
+  const results = [];
 
   /**
-   * @param {string} left (
-   * @param {string} right )
-   * @param {string} path
+   * @param {string} output
+   * @param {number} left
+   * @param {number} right
    */
-  const travel = (left, right, path) => {
-    if (left > n) return;
-
-    if (right > left) return;
-
-    if (right === n) {
-      outputs.push(path);
-      return;
+  const getNext = (output, left, right) => {
+    if (!left && !right) {
+      results.push(output);
     }
 
-    travel(left + 1, right, path + "(");
-    travel(left, right + 1, path + ")");
+    if (left > 0) {
+      getNext(output + "(", left - 1, right);
+    }
+
+    // Left must greater than right to be a valid parenthesis
+    if (left < right && right > 0) {
+      getNext(output + ")", left, right - 1);
+    }
   };
 
-  travel(0, 0, "");
+  getNext("", n, n);
 
-  return outputs;
+  return results;
 };
 
 /**

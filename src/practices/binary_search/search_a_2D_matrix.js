@@ -20,39 +20,50 @@ You must write a solution in O(log(m * n)) time complexity.
  * @return {boolean}
  */
 var searchMatrix = function (matrix, target) {
-  const colLength = matrix[0].length;
-
-  // Find the row
   let top = 0;
-  let bot = matrix.length - 1;
-  let row = 0;
+  let bottom = matrix.length - 1;
 
-  while (top <= bot) {
-    const middle = Math.floor((top + bot) / 2);
+  let row = -1;
 
-    if (target > matrix[middle][colLength - 1]) {
-      top = middle + 1;
-    } else if (target < matrix[middle][0]) {
-      bot = middle - 1;
-    } else {
-      row = middle;
+  while (top <= bottom) {
+    const mid = Math.floor((top + bottom) / 2);
+
+    if (
+      matrix[mid][0] <= target &&
+      matrix[mid][matrix[mid].length - 1] >= target
+    ) {
+      row = mid;
       break;
+    }
+
+    if (matrix[mid][0] > target) {
+      bottom = mid - 1;
+    } else {
+      top = mid + 1;
     }
   }
 
-  // Find the index of the row
+  if (row === -1) {
+    return false;
+  }
 
   let left = 0;
-  let right = colLength - 1;
+  let right = matrix[row].length - 1;
 
   while (left <= right) {
-    const middle = Math.floor((left + right) / 2);
+    const mid = Math.floor((left + right) / 2);
 
-    if (target === matrix[row][middle]) return true;
+    if (matrix[row][mid] === target) {
+      return true;
+    }
 
-    if (target > matrix[row][middle]) left = middle + 1;
-    else right = middle - 1;
+    if (matrix[row][mid] > target) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
   }
+
   return false;
 };
 
@@ -64,7 +75,7 @@ export const main = async () => {
         [10, 11, 16, 20],
         [23, 30, 34, 60],
       ],
-      32
+      3
     )
-  );
+  ); // true
 };
