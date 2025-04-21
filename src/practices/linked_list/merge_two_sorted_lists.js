@@ -31,13 +31,40 @@ function ListNode(val, next) {
  * @param {ListNode} list2
  * @return {ListNode}
  */
-var mergeTwoLists = function (list1, list2) {
+var mergeTwoLists_recursion = function (list1, list2) {
   if (!list1 || !list2) return list1 ?? list2 ?? null;
 
   if (list1.val <= list2.val) {
     return new ListNode(list1.val, mergeTwoLists(list1.next, list2));
   }
   return new ListNode(list1.val, mergeTwoLists(list1, list2.next));
+};
+
+/**
+ * @param {ListNode} node1
+ * @param {ListNode} node2
+ * @return {ListNode}
+ */
+var mergeTwoLists = (node1, node2) => {
+  const newList = new ListNode();
+  let head = newList;
+
+  while (node1 && node2) {
+    if (node1.val <= node2.val) {
+      head.next = node1;
+      node1 = node1.next;
+    } else {
+      head.next = node2;
+      node2 = node2.next;
+    }
+    head = head.next;
+  }
+
+  if (node1 || node2) {
+    head.next = node1 ?? node2;
+  }
+
+  return newList.next;
 };
 
 /**

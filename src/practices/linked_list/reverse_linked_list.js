@@ -1,5 +1,7 @@
 /**
 
+❗️
+
 [Easy]
 
 206. Reverse Linked List
@@ -20,36 +22,45 @@ function ListNode(val, next) {
   this.val = val === undefined ? 0 : val;
   this.next = next === undefined ? null : next;
 }
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList_recursion = (head) => {
+  /**
+   *
+   * @param {ListNode | null} prev
+   * @param {ListNode | null} curr
+   */
+  const reverse = (prev, curr) => {
+    if (!curr) return prev;
+
+    const temp = curr.next;
+    curr.next = prev;
+
+    return reverse(curr, temp);
+  };
+
+  return reverse(null, head);
+};
+
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  if (!head) return null;
+  let prevNode = null;
+  let currentNode = head;
 
-  let newHead = null;
+  while (currentNode) {
+    const temp = currentNode.next;
+    currentNode.next = prevNode;
+    prevNode = currentNode;
+    currentNode = temp;
+  }
 
-  /**
-   * @param {ListNode} node
-   */
-  const traverse = (node) => {
-    if (!node.next) {
-      newHead = node;
-      return node;
-    }
-
-    const next = traverse(node.next);
-
-    node.next = null;
-
-    next.next = node;
-
-    return next.next;
-  };
-
-  traverse(head);
-
-  return newHead;
+  return prevNode;
 };
 
 const buildListNode = (list) => {
