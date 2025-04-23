@@ -28,7 +28,7 @@ const isNilish = (v) => v === null || v === undefined;
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
- * @param {Number} adjust
+ * @param {Number} acc
  * @return {ListNode}
  */
 var addTwoNumbers = function (l1, l2, acc = 0) {
@@ -82,4 +82,11 @@ export const main = async () => {
   );
 
   console.log(isExpectedNode(output2, [6, 7, 7, 1]));
+
+  const output3 = addTwoNumbers(
+    buildListNode([9, 9, 9]),
+    buildListNode([9, 9])
+  );
+
+  console.log(isExpectedNode(output3, [8, 9, 0, 1]));
 };
