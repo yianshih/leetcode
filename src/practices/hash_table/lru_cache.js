@@ -1,5 +1,7 @@
 /**
 
+❗️
+
 [Medium]
 
 146. LRU Cache
@@ -16,7 +18,7 @@ The functions get and put must each run in O(1) average time complexity.
 
 */
 
-class LRUCache {
+class LRUCacheWithMap {
   constructor(capacity) {
     this.capacity = capacity;
     this.cache = new Map();
@@ -51,6 +53,103 @@ class LRUCache {
   }
 }
 
+class ListNode {
+  /**
+   * @param {number} key
+   * @param {number} val
+   * @param {ListNode} prev
+   * @param {ListNode} next
+   */
+  constructor(key = 0, val = 0, prev = null, next = null) {
+    this.key = key;
+    this.val = val;
+    this.prev = prev;
+    this.next = next;
+  }
+}
+
+class LRUCache {
+  /**
+   * @param {number} capacity
+   */
+  constructor(capacity) {
+    this.cache = new Map();
+    this.size = capacity;
+    this.left = new ListNode(); // Least recent used
+    this.right = new ListNode(); // Most recent used
+
+    this.left.next = this.right;
+    this.right.prev = this.left;
+  }
+
+  /**
+   * Insert node to the right
+   * @param {ListNode} node
+   */
+  insert(node) {
+    const prev = this.right.prev;
+    const next = this.right;
+
+    prev.next = node;
+    next.prev = node;
+
+    node.prev = prev;
+    node.next = next;
+  }
+
+  /**
+   * Remove node from the list
+   * @param {ListNode} node
+   */
+  remove(node) {
+    const prev = node.prev;
+    const next = node.next;
+
+    prev.next = next;
+    next.prev = prev;
+  }
+
+  /**
+   * @param {number} key
+   * @return {number}
+   */
+  get(key) {
+    const node = this.cache.get(key);
+
+    if (!node) return -1;
+
+    this.remove(node);
+    this.insert(node);
+
+    return node.val;
+  }
+
+  /**
+   * @param {number} key
+   * @param {number} value
+   * @return {void}
+   */
+  put(key, value) {
+    if (this.cache.has(key)) {
+      this.remove(this.cache.get(key));
+    }
+
+    const node = new ListNode(key, value);
+
+    this.cache.set(key, node);
+
+    this.insert(node);
+
+    // If size exceed capacity, remove left
+    if (this.cache.size > this.size) {
+      const left = this.left.next;
+      this.left.next = left.next;
+      this.remove(left);
+      this.cache.delete(left.key);
+    }
+  }
+}
+
 /**
  * Your LRUCache object will be instantiated and called as such:
  * var obj = new LRUCache(capacity)
@@ -71,7 +170,7 @@ const test = (actions, args, expects) => {
     if (actions[i] === "LRUCache") {
       instance = new LRUCache(...args[i]);
     } else {
-      const res = instance[actions[i]](...args[i]);
+      const res = instance[actions[i]](...args[i]) ?? null;
       if (res !== expects[i]) {
         return false;
       }
