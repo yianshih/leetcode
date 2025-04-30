@@ -26,7 +26,7 @@ function ListNode(val, next) {
  *
  * @param {ListNode} node1
  * @param {ListNode} node2
- * @returns
+ * @returns {ListNode}
  */
 const mergeTwoSortedList = (node1, node2) => {
   if (!node1 || !node2) return node1 ?? node2 ?? null;
