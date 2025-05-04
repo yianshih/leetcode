@@ -10,48 +10,39 @@ The diameter of a binary tree is the length of the longest path between any two 
 
 The length of a path between two nodes is represented by the number of edges between them.
 
+*/
 
- */
-
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-
-function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
+// Definition for a binary tree node.
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
 }
 
 /**
  * @param {TreeNode} root
  * @return {number}
  */
-var diameterOfBinaryTree = function (root) {
+var diameterOfBinaryTree = (root) => {
   let max = 0;
 
-  const travel = (node) => {
-    // invalid path, deduct previous count
-    if (!node) return -1;
+  /**
+   * @param {TreeNode} tree
+   * @param {Number} count
+   */
+  const travel = (tree) => {
+    if (!tree) return 0;
 
-    // leaf node
-    if (!node?.left && !node?.right) return 0;
+    const leftNodes = travel(tree.left);
+    const rightNodes = travel(tree.right);
 
-    const left = 1 + travel(node?.left);
+    // Sub-tree might have greater diameters
+    max = Math.max(max, leftNodes + rightNodes);
 
-    const right = 1 + travel(node?.right);
-
-    const localMax = left + right;
-
-    max = Math.max(max, localMax);
-
-    // Pick longest path
-    return Math.max(left, right);
+    // Return the max edges from this node for parent
+    return 1 + Math.max(leftNodes, rightNodes);
   };
 
   travel(root);
