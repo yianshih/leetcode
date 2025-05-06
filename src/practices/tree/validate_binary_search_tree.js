@@ -14,39 +14,36 @@ A valid BST is defined as follows:
 
 */
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-
-function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
 }
+
 /**
  * @param {TreeNode} root
  * @return {boolean}
  */
 var isValidBST = function (root) {
   /**
+   *
    * @param {TreeNode} node
+   * @param {number} min node must greater than min
+   * @param {number} max node must smaller than max
    */
-  const traverse = (node, min, max) => {
+  const travel = (node, min, max) => {
     if (!node) return true;
 
-    if (node.val <= min || node.val >= max) return false;
+    if (!(node.val > min && node.val < max)) return false;
 
     return (
-      traverse(node.left, min, node.val) && traverse(node.right, node.val, max)
+      travel(node.left, min, node.val) && travel(node.right, node.val, max)
     );
   };
 
-  return traverse(root, -Infinity, Infinity);
+  return travel(root, -Infinity, Infinity);
 };
 
 const getLeftIndex = (index) => index * 2 + 1;
