@@ -43,7 +43,7 @@ class KthLargest {
       this.minHeap.dequeue();
     }
 
-    return this.minHeap.front().element;
+    return this.minHeap.front();
   }
 }
 
