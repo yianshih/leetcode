@@ -56,7 +56,7 @@ class Trie {
 
     if (!node) return false;
 
-    if (rest.length === 0) return node && node.isWordEnd;
+    if (rest.length === 0) return node.isWordEnd;
 
     return node.search(rest);
   }
