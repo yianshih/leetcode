@@ -24,68 +24,90 @@ An adjacency list is a collection of unordered lists used to represent a finite 
 
 The given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.
 
- 
- */
+*/
 
-/**
- * // Definition for a _Node.
- * function _Node(val, neighbors) {
- *    this.val = val === undefined ? 0 : val;
- *    this.neighbors = neighbors === undefined ? [] : neighbors;
- * };
- */
-
-/**
- *
- * @param {number} val
- * @param {_Node[]} neighbors
- */
-function _Node(val, neighbors) {
-  this.val = val === undefined ? 0 : val;
-  this.neighbors = neighbors === undefined ? [] : neighbors;
+// Definition for a Node.
+class _Node {
+  /**
+   * @param {number} val
+   * @param {Node[]} neighbors
+   */
+  constructor(val = 0, neighbors = []) {
+    this.val = val;
+    this.neighbors = neighbors;
+  }
 }
 
 /**
  * @param {_Node} node
  * @return {_Node}
  */
-var cloneGraph = function (root) {
-  if (!root.val) return new _Node();
+var cloneGraph_iterator = (node) => {
+  if (!node) return null;
 
-  const clonedMap = new Map();
+  const nodeMap = {};
 
-  /**
-   * @param {_Node} node
-   */
-  const traverse = (node) => {
+  const root = new _Node(node.val);
+
+  nodeMap[node.val] = root;
+
+  let stack = [node];
+
+  while (stack.length) {
+    const currentNode = stack.pop();
+
+    const node = nodeMap[currentNode.val];
+
+    // Node will be created before reaching
     if (!node) return;
 
-    if (!clonedMap.has(node.val)) {
-      clonedMap.set(node.val, new _Node(node.val));
-    }
-
-    const clonedNode = clonedMap.get(node.val);
-
-    for (let n of node.neighbors) {
-      const clonedNeighbor = clonedMap.get(n.val);
-
-      if (clonedNeighbor) {
-        clonedNeighbor.neighbors.push(clonedNode);
-      } else {
+    currentNode.neighbors.forEach((n) => {
+      if (!nodeMap[n.val]) {
         const newNode = new _Node(n.val);
-        clonedMap.set(n.val, newNode);
-        newNode.neighbors.push(clonedNode);
-        traverse(n);
+        nodeMap[n.val] = newNode;
+        stack.push(n);
       }
-    }
+
+      node.neighbors.push(nodeMap[n.val]);
+    });
+  }
+
+  return root;
+};
+
+/**
+ * @param {_Node} node
+ * @return {_Node}
+ */
+var cloneGraph = (node) => {
+  if (!node) return null;
+
+  const copyMap = {};
+
+  /**
+   *
+   * @param {_Node} node
+   */
+  const travel = (currentNode) => {
+    if (copyMap[currentNode.val]) return copyMap[currentNode.val];
+
+    const copy = new _Node(currentNode.val);
+
+    copyMap[currentNode.val] = copy;
+
+    currentNode.neighbors.forEach((n) => {
+      copy.neighbors.push(travel(n));
+    });
+
+    return copy;
   };
 
-  traverse(root);
-
-  return clonedMap.get(root.val);
+  return travel(node);
 };
 
 export const main = async () => {
+  // [[2,4],[1,3],[2,4],[1,3]]
+
   const node1 = new _Node(1);
   const node2 = new _Node(2);
   const node3 = new _Node(3);
@@ -96,6 +118,5 @@ export const main = async () => {
   node3.neighbors = [node2, node4];
   node4.neighbors = [node1, node3];
 
-  // [[2,4],[1,3],[2,4],[1,3]]
   console.log(cloneGraph(node1));
 };
