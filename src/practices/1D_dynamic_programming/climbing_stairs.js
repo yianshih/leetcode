@@ -29,9 +29,7 @@ var climbStairs = function (n) {
     return dp[n];
   };
 
-  step(n);
-
-  return dp[n];
+  return step(n);
 };
 
 export const main = async () => {
