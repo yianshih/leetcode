@@ -1,5 +1,4 @@
 /**
- * 
 
 [Medium]
 
@@ -11,33 +10,27 @@ Return the fewest number of coins that you need to make up that amount. If that 
 
 You may assume that you have an infinite number of each kind of coin.
 
-
- */
+*/
 
 /**
  * @param {number[]} coins
  * @param {number} amount
  * @return {number}
  */
-var coinChange = function (coins, amount) {
-  const dp = new Array(amount + 1).fill(-1);
+var coinChange = (coins, amount) => {
+  const dp = new Array(amount + 1).fill(Infinity);
 
   dp[0] = 0;
 
-  for (let i = 1; i <= amount; i++) {
-    for (let j = 0; j < coins.length; j++) {
-      const remain = i - coins[j];
-      if (remain >= 0) {
-        const step = dp[remain] > -1 ? dp[remain] + 1 : -1;
-
-        if (step > -1) {
-          dp[i] = dp[i] > -1 ? Math.min(dp[i], step) : step;
-        }
+  for (let i = 1; i < amount + 1; i++) {
+    for (let c of coins) {
+      if (i >= c) {
+        dp[i] = Math.min(dp[i], 1 + dp[i - c]);
       }
     }
   }
 
-  return dp[amount];
+  return dp[amount] === Infinity ? -1 : dp[amount];
 };
 
 export const main = async () => {
