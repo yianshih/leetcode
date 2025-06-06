@@ -38,10 +38,13 @@ var canPartition = function (nums) {
     dp = newDp;
   }
 
-  return dp.has(target);
+  return false;
 };
 
 export const main = async () => {
-  console.log(canPartition([1, 5, 11, 5]) === true);
-  console.log(canPartition([1, 2, 3, 5]) === false);
+  console.log(canPartition([1, 2, 3, 4])); // true
+  console.log(canPartition([1, 2, 3, 4, 5])); // false
+  console.log(canPartition([1, 5, 11, 5])); // true
+  console.log(canPartition([20, 1, 16, 2, 17, 16, 8, 15, 7])); // true
+  console.log(canPartition([3, 3, 6, 8, 16, 16, 16, 18, 20])); // true
 };

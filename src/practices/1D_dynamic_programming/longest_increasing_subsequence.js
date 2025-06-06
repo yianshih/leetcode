@@ -27,5 +27,8 @@ var lengthOfLIS = function (nums) {
 };
 
 export const main = async () => {
-  console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]) === 4); // 4
+  console.log(lengthOfLIS([0, 1, 0, 3, 2, 3])); // 4
+  console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18])); // 4
+  console.log(lengthOfLIS([9, 1, 4, 2, 3, 3, 7])); // 4
+  console.log(lengthOfLIS([0, 3, 1, 3, 2, 3])); // 4
 };
