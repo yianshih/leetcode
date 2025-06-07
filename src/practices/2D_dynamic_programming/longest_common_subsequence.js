@@ -39,5 +39,8 @@ var longestCommonSubsequence = function (text1, text2) {
 };
 
 export const main = async () => {
-  console.log(longestCommonSubsequence("abcde", "ace") === 3); // 3
+  console.log(longestCommonSubsequence("abcde", "ace")); // 3
+  console.log(longestCommonSubsequence("abc", "abc")); // 3
+  console.log(longestCommonSubsequence("abc", "def")); // 0
+  console.log(longestCommonSubsequence("abcba", "abcbcba")); // 5
 };
