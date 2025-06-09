@@ -18,36 +18,31 @@ Return the number of different expressions that you can build, which evaluates t
  * @param {number} target
  * @return {number}
  */
-var findTargetSumWays = function (nums, target) {
-  const dp = new Map();
+var findTargetSumWays = (nums, target) => {
+  let dp = {};
 
-  /**
-   * @param {number} index
-   * @param {number} total
-   */
-  const traverse = (index, total) => {
-    // If total === target then it's a valid path
-    if (index === nums.length) return total === target ? 1 : 0;
+  const dfs = (i, sum) => {
+    const key = `${i},${sum}`;
 
-    const key = `${index}:${total}`;
+    if (dp[key] !== undefined) return dp[key];
 
-    if (dp.has(key)) return dp.get(key);
+    if (i === nums.length) {
+      if (sum === target) {
+        return 1;
+      }
 
-    // Sum up the path of plus and minus
-    dp.set(
-      key,
-      traverse(index + 1, total + nums[index]) +
-        traverse(index + 1, total - nums[index])
-    );
+      return 0;
+    }
 
-    console.log(dp);
+    dp[key] = dfs(i + 1, sum + nums[i]) + dfs(i + 1, sum - nums[i]);
 
-    return dp.get(key);
+    return dp[key];
   };
 
-  return traverse(0, 0);
+  return dfs(0, 0);
 };
 
 export const main = async () => {
-  console.log(findTargetSumWays([1, 1, 1, 1, 1], 3) === 5); // 5
+  console.log(findTargetSumWays([2, 2, 2], 2)); // 3
+  console.log(findTargetSumWays([1, 1, 1, 1, 1], 3)); // 5
 };
