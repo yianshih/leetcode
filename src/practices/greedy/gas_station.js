@@ -1,5 +1,4 @@
-/**
- * 
+/** 
 
 [Medium]
 
@@ -11,8 +10,7 @@ You have a car with an unlimited gas tank and it costs cost[i] of gas to travel 
 
 Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique
 
-
- */
+*/
 
 /**
  * @param {number[]} gas
@@ -42,11 +40,9 @@ var canCompleteCircuit = function (gas, cost) {
 };
 
 export const main = async () => {
-  console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]) === 3);
-
-  console.log(canCompleteCircuit([5, 1, 2, 3, 4], [4, 4, 1, 5, 1]) === 4);
-
-  console.log(
-    canCompleteCircuit([1, 2, 3, 4, 5, 5, 70], [2, 3, 4, 3, 9, 6, 2]) === 6
-  );
+  console.log(canCompleteCircuit([1, 2, 3, 4], [2, 2, 4, 1])); // 3
+  console.log(canCompleteCircuit([1, 2, 3], [2, 3, 2])); // -1
+  console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2])); // 3
+  console.log(canCompleteCircuit([2, 3, 4], [3, 4, 3])); // -1
+  console.log(canCompleteCircuit([5, 8, 2, 8], [6, 5, 6, 6])); // 3
 };
