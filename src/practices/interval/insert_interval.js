@@ -19,51 +19,53 @@ Note that you don't need to modify intervals in-place. You can make a new array 
  * @param {number[]} newInterval
  * @return {number[][]}
  */
-var insert = function (intervals, newInterval) {
-  const outputs = [];
+var insert = (intervals, newInterval) => {
+  const res = [];
 
   for (let i = 0; i < intervals.length; i++) {
-    if (newInterval[1] < intervals[i][0]) {
-      outputs.push(newInterval);
-      return outputs.concat(intervals.slice(i, intervals.length));
-    } else if (newInterval[0] > intervals[i][1]) {
-      outputs.push(intervals[i]);
-    } else {
+    const [start, end] = intervals[i];
+
+    // New Interval is before current interval without overlaps
+    if (newInterval[1] < start) {
+      res.push(newInterval);
+      return res.concat(intervals.slice(i));
+    }
+    // New Interval is after current interval without overlaps
+    if (newInterval[0] > end) {
+      res.push(intervals[i]);
+    }
+    // Overlaps found, merge interval into new interval
+    else {
       newInterval = [
-        Math.min(intervals[i][0], newInterval[0]),
-        Math.max(intervals[i][1], newInterval[1]),
+        Math.min(start, newInterval[0]),
+        Math.max(end, newInterval[1]),
       ];
     }
   }
 
-  outputs.push(newInterval);
+  res.push(newInterval);
 
-  return outputs;
+  return res;
 };
 
 export const main = async () => {
-  // expect [ [ 1, 5 ], [ 6, 9 ] ]
-  console.log(
-    insert(
-      [
-        [1, 3],
-        [6, 9],
-      ],
-      [2, 5]
-    )
-  );
+  const test1 = [
+    [
+      [1, 3],
+      [4, 6],
+    ],
+    [2, 5],
+  ];
 
-  // expect [[1,2],[3,10],[12,16]]
-  console.log(
-    insert(
-      [
-        [1, 2],
-        [3, 5],
-        [6, 7],
-        [8, 10],
-        [12, 16],
-      ],
-      [4, 8]
-    )
-  );
+  const test2 = [
+    [
+      [1, 2],
+      [3, 5],
+      [9, 10],
+    ],
+    [6, 7],
+  ];
+
+  console.log(insert(...test1)); // [[1,6]]
+  console.log(insert(...test2)); // [[1,2],[3,5],[6,7],[9,10]]
 };

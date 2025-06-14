@@ -12,33 +12,29 @@ Given an array of intervals where intervals[i] = [starti, endi], merge all overl
  * @param {number[][]} intervals
  * @return {number[][]}
  */
-var merge = function (intervals) {
-  const outputs = [];
+var merge = (intervals) => {
+  const res = [];
 
-  intervals = intervals.sort((a, b) => a[0] - b[0]);
+  intervals.sort(([a], [b]) => a - b);
 
   for (let i = 0; i < intervals.length; i++) {
-    if (i === intervals.length - 1) {
-      outputs.push(intervals[i]);
-      break;
+    if (!intervals[i + 1]) {
+      res.push(intervals[i]);
+      return res;
     }
 
-    if (intervals[i][1] < intervals[i + 1][0]) {
-      outputs.push(intervals[i]);
-    } else if (intervals[i][0] > intervals[i + 1][1]) {
-      outputs.push(intervals[i + 1]);
-      intervals[i + 1] = intervals[i];
-    } else {
-      const mergedInterval = [
-        Math.min(intervals[i][0], intervals[i + 1][0]),
-        Math.max(intervals[i][1], intervals[i + 1][1]),
-      ];
+    const [start, end] = intervals[i];
+    const [nextStart, nextEnd] = intervals[i + 1];
 
-      intervals[i + 1] = mergedInterval;
+    // Since intervals are sorted, so interval will be overlapping if end is greater than next start
+    if (end < nextStart) {
+      res.push(intervals[i]);
+    } else {
+      intervals[i + 1] = [Math.min(start, nextStart), Math.max(end, nextEnd)];
     }
   }
 
-  return outputs;
+  return res;
 };
 
 export const main = async () => {
