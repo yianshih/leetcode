@@ -32,7 +32,7 @@ Constraints:
  * @param {number} x
  * @return {number}
  */
-var reverse = function (x) {
+var reverse_with_adjust = function (x) {
   let adjust = x < 0 ? -1 : 1;
 
   let current = x * adjust;
@@ -52,6 +52,27 @@ var reverse = function (x) {
   return result;
 };
 
+/**
+ * @param {number} x
+ * @return {number}
+ */
+var reverse = function (x) {
+  let res = 0;
+
+  while (x !== 0) {
+    res = res * 10 + (x % 10);
+    x = Math.trunc(x / 10);
+  }
+
+  if (res > Math.pow(2, 31) && res < -Math.pow(2, 31)) {
+    return 0;
+  }
+
+  return res;
+};
+
 export const main = async () => {
-  console.log(reverse(1563847412));
+  console.log(reverse(1563847412)); // 2147483651
+  console.log(reverse(1234)); // 4321
+  console.log(reverse(-1234)); // -4321
 };
