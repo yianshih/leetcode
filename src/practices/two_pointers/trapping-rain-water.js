@@ -1,4 +1,14 @@
 /**
+
+[Hard]❗️
+
+42. Trapping Rain Water
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+*/
+
+/**
  * @param {number[]} height
  * @return {number}
  */
@@ -72,4 +82,5 @@ var trap = function (height) {
 export const main = async () => {
   //   console.log(trap_with_n_memory([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])); // 6
   console.log(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])); // 6
+  console.log(trap([0, 2, 0, 3, 1, 0, 1, 3, 2, 1])); // 9
 };

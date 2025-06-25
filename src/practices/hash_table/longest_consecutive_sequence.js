@@ -1,7 +1,7 @@
 /**
  * 
 
-[Medium]
+[Medium] ❗️
 
 128. Longest Consecutive Sequence
 
