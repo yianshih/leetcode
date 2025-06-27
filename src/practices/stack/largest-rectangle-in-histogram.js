@@ -23,9 +23,8 @@ var largestRectangleArea = function (heights) {
     // If new height is lower than previous height, that means the previous height cannot be extended anymore
     while (barHeight.length && heights[i] < barHeight[barHeight.length - 1]) {
       const height = barHeight.pop();
-      const index = barIndex.pop();
-      poppedIndex = index;
-      max = Math.max(max, height * (i - index));
+      poppedIndex = barIndex.pop();
+      max = Math.max(max, height * (i - poppedIndex));
     }
     barHeight.push(heights[i]);
     barIndex.push(poppedIndex ?? i);

@@ -30,26 +30,26 @@ var checkInclusion = function (s1, s2) {
 
   let left = 0;
 
-  for (let right = 0; right < s2.length; right++) {
-    if (requiredCount[s2[right]]) {
-      currentCount[s2[right]] = (currentCount[s2[right]] ?? 0) - 1;
-      if (currentCount[s2[right]] < 0) {
-        // As current count is over deducted, we need to exclude the same char from the window
-        while (currentCount[s2[right]] < 0) {
-          if (currentCount[s2[left]] !== undefined) {
-            currentCount[s2[left]] += 1;
-          }
-          left++;
+  for (let r = 0; r < s2.length; r++) {
+    if (requiredCount[s2[r]]) {
+      // Count cannot be negative, so shift left until it's greater than 0
+      while (currentCount[s2[r]] === 0) {
+        if (currentCount[s2[left]] !== undefined) {
+          currentCount[s2[left]]++;
         }
-      } else if (isEmpty(currentCount)) {
+        left++;
+      }
+
+      currentCount[s2[r]]--;
+
+      if (isEmpty(currentCount)) {
         return true;
       }
     } else {
-      // Shift left to next right when found invalid char
-      // Add back count while shifting
-      while (left < right + 1) {
+      // Add back count while shifting left
+      while (left < r + 1) {
         if (currentCount[s2[left]] !== undefined) {
-          currentCount[s2[left]] += 1;
+          currentCount[s2[left]]++;
         }
         left++;
       }

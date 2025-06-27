@@ -1,7 +1,7 @@
 /**
  * 
 
-[hard]
+[Hard]
 
 76. Minimum Window Substring
 
@@ -33,28 +33,27 @@ var minWindow = function (s, t) {
 
   const requiredSize = new Set(t).size; // Size of all required character
 
-  for (let right = 0; right < s.length; right++) {
-    if (requiredCount[s[right]]) {
-      windowCount[s[right]] += 1;
-      // Found exact required count of a character
-      if (windowCount[s[right]] === requiredCount[s[right]]) {
-        windowSize += 1;
-        if (windowSize === requiredSize) {
-          // Shrink until it's invalid
-          while (windowSize === requiredSize) {
-            if (!minWindow || minWindow.length > right - left + 1) {
-              minWindow = s.slice(left, right + 1);
-            }
+  for (let r = 0; r < s.length; r++) {
+    if (requiredCount[s[r]]) {
+      windowCount[s[r]]++;
 
-            if (requiredCount[s[left]]) {
-              windowCount[s[left]] -= 1;
+      if (windowCount[s[r]] === requiredCount[s[r]]) {
+        windowSize++;
 
-              if (windowCount[s[left]] < requiredCount[s[left]]) {
-                windowSize -= 1;
-              }
-            }
-            left++;
+        // Found exact required count of a character, shrink until it's invalid
+        while (windowSize === requiredSize) {
+          // Keep updating the minWindow while shrinking
+          if (!minWindow || minWindow.length > r - left + 1) {
+            minWindow = s.slice(left, r + 1);
           }
+
+          if (requiredCount[s[left]]) {
+            windowCount[s[left]]--;
+            if (windowCount[s[left]] < requiredCount[s[left]]) {
+              windowSize--;
+            }
+          }
+          left++;
         }
       }
     }
@@ -69,7 +68,7 @@ export const main = async () => {
   console.log(minWindow("ab", "a")); // a
   console.log(minWindow("OUZODYXAZV", "XYZ")); // YXAZ
   console.log(minWindow("x", "xy")); // ""
-  console.log(minWindow("abc", "bc")); // ""
-  console.log(minWindow("aa", "aa")); // ""
-  console.log(minWindow("aab", "aab")); // ""
+  console.log(minWindow("abc", "bc")); // "bc"
+  console.log(minWindow("aa", "aa")); // "aa"
+  console.log(minWindow("aab", "aab")); // "aab"
 };

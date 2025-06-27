@@ -28,8 +28,8 @@ var characterReplacement = function (s, k) {
     count.set(s[right], (count.get(s[right]) ?? 0) + 1);
 
     /**
-     * Don't care if new maxCount is spill over or not because we want keep the max count
-     * The result will not change until a new valid maxCount found
+     * We don't need to decrease the maxCount when spilling over
+     * Because the result will not change until a new valid maxCount found
      */
     maxCount = Math.max(maxCount, count.get(s[right]));
 
