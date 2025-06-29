@@ -54,6 +54,7 @@ var findKthLargest_quick_select = function (nums, k) {
 
     for (let i = l; i < r; i++) {
       if (nums[i] <= pivot) {
+        // Swap with pIndex for numbers that is greater than pivot (moving all greater number to right)
         [nums[pIndex], nums[i]] = [nums[i], nums[pIndex]];
         pIndex++;
       }

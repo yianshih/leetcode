@@ -22,6 +22,54 @@ import { MaxPriorityQueue } from "@datastructures-js/priority-queue";
  * @param {number[]} stones
  * @return {number}
  */
+var lastStoneWeight_bucket_sort = (stones) => {
+  let maxStone = Math.max(...stones);
+
+  const bucket = new Array(maxStone + 1).fill(0);
+
+  for (let s of stones) {
+    bucket[s]++;
+  }
+
+  let first = maxStone;
+  let second = maxStone;
+
+  while (first > 0) {
+    // If first count is even then it will be smashed to zero (or it's zero) so shift to left to find largest
+    if (bucket[first] % 2 === 0) {
+      bucket[first] = 0;
+      first--;
+      continue;
+    }
+
+    let j = Math.min(first - 1, second);
+
+    while (j > 0 && bucket[j] === 0) {
+      j--;
+    }
+
+    // Cannot find second weight
+    if (j === 0) {
+      return first;
+    }
+
+    second = j;
+
+    bucket[first]--;
+    bucket[second]--;
+
+    bucket[first - second]++;
+
+    first = Math.max(first - second, second);
+  }
+
+  return first;
+};
+
+/**
+ * @param {number[]} stones
+ * @return {number}
+ */
 var lastStoneWeight = function (stones) {
   if (stones.length === 1) return stones[0];
 
