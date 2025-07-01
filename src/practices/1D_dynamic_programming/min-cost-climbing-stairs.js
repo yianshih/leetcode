@@ -43,6 +43,14 @@ var minCostClimbingStairs = function (cost) {
   cost[cost.length] = 0; // top of stairs
 
   for (let i = cost.length - 3; i >= 0; i--) {
+    /**
+     * cost[i] = Math.min(
+     *  cost[i] + cost[i + 1] // one step
+     *  cost[i] + cost[i + 2] // two steps
+     * )
+     * Equals to
+     * cost[i] += Math.min(cost[i + 1], cost[i + 2])
+     */
     cost[i] += Math.min(cost[i + 1], cost[i + 2]);
   }
 
