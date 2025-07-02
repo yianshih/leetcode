@@ -63,6 +63,6 @@ var uniquePaths = function (m, n) {
 
 export const main = async () => {
   console.log(uniquePaths(3, 2)); // 3
-  console.log(uniquePaths(3, 3)); // 3
+  console.log(uniquePaths(3, 3)); // 6
   console.log(uniquePaths(3, 7)); // 28
 };

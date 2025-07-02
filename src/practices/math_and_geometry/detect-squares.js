@@ -47,11 +47,12 @@ class DetectSquares {
     for (let [key, count] of this.points.entries()) {
       const [x, y] = key.split(",").map(Number);
 
-      // If it's not a diagonal point, then skip
+      // If it's not a diagonal point or same position then skip
       if (Math.abs(x - pX) !== Math.abs(y - pY) || (pX === x && pY === y)) {
         continue;
       }
 
+      // Once the diagonal point is found, then calculate the total based on rest of two points
       const p1 = [pX, y].join(",");
       const p2 = [x, pY].join(",");
 

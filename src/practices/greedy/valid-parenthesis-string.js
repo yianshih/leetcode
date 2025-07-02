@@ -54,5 +54,5 @@ export const main = async () => {
   console.log(checkValidString("(((*)")); // false
   console.log(checkValidString("()")); // true
   console.log(checkValidString("(*)")); // true
-  console.log(checkValidString("(*))")); // false
+  console.log(checkValidString("(*))")); // true
 };
