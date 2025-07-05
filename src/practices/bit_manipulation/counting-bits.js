@@ -12,7 +12,7 @@ Given an integer n, return an array ans of length n + 1 such that for each i (0 
  * @param {number} n
  * @return {number[]}
  */
-var countBits = function (n) {
+var countBits_with_offset = function (n) {
   const dp = new Array(n + 1).fill(0);
 
   const res = [0];
@@ -29,6 +29,33 @@ var countBits = function (n) {
   }
 
   return res;
+};
+
+/**
+ * @param {number} n
+ * @return {number[]}
+ */
+var countBits = function (n) {
+  const dp = new Array(n + 1).fill(-1);
+
+  dp[0] = 0;
+
+  /**
+   * @param {number} n
+   */
+  const getCount = (n) => {
+    if (n === 0) return 0;
+
+    if (dp[n] > -1) return dp[n];
+
+    return (n % 2) + getCount(n >> 1);
+  };
+
+  for (let i = 1; i <= n; i++) {
+    dp[i] = getCount(i);
+  }
+
+  return dp;
 };
 
 export const main = async () => {
