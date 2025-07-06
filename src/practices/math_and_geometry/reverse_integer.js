@@ -64,7 +64,7 @@ var reverse = function (x) {
     x = Math.trunc(x / 10);
   }
 
-  if (res > Math.pow(2, 31) && res < -Math.pow(2, 31)) {
+  if (res > Math.pow(2, 31) || res < -Math.pow(2, 31)) {
     return 0;
   }
 

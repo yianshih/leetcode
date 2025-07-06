@@ -48,5 +48,5 @@ export const main = async () => {
 
   console.log(findMin([4, 5, 0, 1, 2, 3])); // 0
 
-  console.log(findMin([2, 1])); // 0
+  console.log(findMin([2, 1])); // 1
 };
