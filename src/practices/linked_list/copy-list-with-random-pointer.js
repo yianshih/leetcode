@@ -44,8 +44,6 @@ var copyRandomList_while = function (head) {
 
   current = head;
 
-  console.log(copyMap);
-
   while (current) {
     const copy = copyMap.get(current);
 

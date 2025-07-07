@@ -143,7 +143,6 @@ class LRUCache {
     // If size exceed capacity, remove left
     if (this.cache.size > this.size) {
       const left = this.left.next;
-      this.left.next = left.next;
       this.remove(left);
       this.cache.delete(left.key);
     }
