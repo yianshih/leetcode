@@ -74,16 +74,12 @@ const countComponents = (n, edges) => {
   const parents = Array.from({ length: n }, (_, i) => i);
   const rank = new Array(n).fill(1);
 
-  const find = (node) => {
-    let res = node;
-
-    while (res !== parents[res]) {
-      // optimization to get grandparent
-      parents[res] = parents[parents[res]];
-      res = parents[res];
+  const find = (n) => {
+    if (n !== parents[n]) {
+      parents[n] = find(parents[n]);
     }
 
-    return res;
+    return parents[n];
   };
 
   const union = (n1, n2) => {
