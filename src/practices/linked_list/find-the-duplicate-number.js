@@ -2,7 +2,7 @@
 
 ❗️
 
-[Medium]
+[Medium] Floyd’s Cycle Finding Algorithm
 
 287. Find the Duplicate Number
 
