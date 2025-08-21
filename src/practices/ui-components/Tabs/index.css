@@ -1,0 +1,7 @@
+.tabs-container { font-family: system-ui, sans-serif; }
+.tab-list { display: inline-flex; gap: 8px; margin-bottom: 8px; }
+.tab { padding: 8px 12px; font-size: 14px; font-weight: 600; border: 1px solid transparent; border-radius: 10px 10px 0 0; cursor: pointer; background: #f1f5f9; }
+.tab:hover { background: #e2e8f0; }
+.tab-selected { border: 1px solid #cbd5e1; border-bottom: 1px solid white; background: #ffffff; }
+.tab-panels { margin-top: -1px; }
+.tab-panel { border: 1px solid #cbd5e1; border-radius: 0 0 10px 10px; padding: 16px; background: #ffffff; }
